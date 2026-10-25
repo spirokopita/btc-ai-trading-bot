@@ -1,0 +1,28 @@
+name: Android paper-only debug APK
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Check project sources
+        run: test -f android/settings.gradle.kts || { echo 'Android V15 source tree not yet committed'; exit 1; }
+      - name: Build debug APK
+        working-directory: android
+        run: gradle --no-daemon assembleDebug
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: btc-paper-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
