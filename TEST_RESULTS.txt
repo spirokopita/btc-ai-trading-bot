@@ -1,0 +1,9 @@
+V13 run 09, 2026-10-25
+Python V12 regression: 130/130 passed (python3 -m unittest discover -s tests -q)
+Kotlin JVM model: 12/12 passed (kotlinc + java -jar)
+Android source contract: 5/5 passed (python3 -m unittest discover -s android/core-tests -p test_*.py)
+Android SQLite instrumentation: 5 tests authored, NOT RUN
+Android Gradle compile/APK: NOT RUN; Android SDK and Gradle unavailable
+Genuine BTC/AUD candles bundled: 0
+Observed real net P&L: NOT MEASURED
+Real trades: 0
