@@ -1,0 +1,20 @@
+{
+  "exchange": "kraken",
+  "instrument": "spot",
+  "tiers": [
+    {"min_30day_volume_usd": 0, "maker_rate": 0.004, "taker_rate": 0.008},
+    {"min_30day_volume_usd": 2500, "maker_rate": 0.003, "taker_rate": 0.006},
+    {"min_30day_volume_usd": 10000, "maker_rate": 0.0022, "taker_rate": 0.0038},
+    {"min_30day_volume_usd": 25000, "maker_rate": 0.002, "taker_rate": 0.0035},
+    {"min_30day_volume_usd": 50000, "maker_rate": 0.0015, "taker_rate": 0.003}
+  ],
+  "spread_bps": 8.0,
+  "base_slippage_bps": 2.0,
+  "volatility_slippage_multiplier": 0.04,
+  "size_slippage_bps": 3.0,
+  "reference_liquidity_quote": 10000.0,
+  "max_slippage_bps": 100.0,
+  "funding_rate_per_8h": 0.0,
+  "withdrawal_fee_quote": 0.0,
+  "network_fee_quote": 0.0
+}
