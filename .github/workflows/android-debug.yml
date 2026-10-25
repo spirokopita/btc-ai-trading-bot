@@ -11,18 +11,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validate project layout
+        run: |
+          echo "Checking required Android source structure"
+          test -f android/settings.gradle.kts
+          test -f android/app/build.gradle.kts
+          test -f android/app/src/main/AndroidManifest.xml
+          echo "Source structure present"
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
-      - name: Check project sources
-        run: test -f android/settings.gradle.kts || { echo 'Android V15 source tree not yet committed'; exit 1; }
-      - name: Build debug APK
+      - name: Android SDK diagnostics
+        run: |
+          echo "ANDROID_HOME=${ANDROID_HOME:-unset}"
+          test -d "${ANDROID_HOME:-/nonexistent}"
+          ls "${ANDROID_HOME}/platforms" || true
+      - name: Build paper-only APK
         working-directory: android
-        run: gradle --no-daemon assembleDebug
+        run: |
+          if [ -f ./gradlew ]; then
+            chmod +x ./gradlew
+            ./gradlew --no-daemon assembleDebug
+          else
+            gradle --no-daemon assembleDebug
+          fi
       - uses: actions/upload-artifact@v4
         if: success()
         with:
           name: btc-paper-debug-apk
           path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
